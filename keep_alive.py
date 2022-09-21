@@ -1,5 +1,7 @@
 from flask import Flask
 from threading import Thread
+from time import sleep
+from os import system
 
 app = Flask('')
 
@@ -15,3 +17,8 @@ def run():
 def keep_alive():
 	t = Thread(target=run)
 	t.start()
+
+def restart():
+	print('restarting')
+	sleep(7)
+	system('python main.py')

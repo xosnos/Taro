@@ -4,7 +4,7 @@ from coffee import coffee_bot
 from inspire import get_quote
 from encourage import update_encouragement, delete_encouragement, positivity, sad_words
 from replit import db
-from keep_alive import keep_alive
+from keep_alive import keep_alive, restart
 
 client = discord.Client(intents = discord.Intents.default())
 
@@ -51,5 +51,12 @@ async def on_message(message):
 	if db['responding'] and any(word in msg for word in sad_words):
 		await message.channel.send(positivity(msg))
 
-keep_alive()
-client.run(os.environ['TOKEN'])
+try:
+	keep_alive()
+	client.run(os.environ['TOKEN'])
+except discord.HTTPException as e:
+	if e.status == 429:
+		restart()
+		os.system('kill 1')
+	else:
+		raise e
