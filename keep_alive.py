@@ -20,5 +20,5 @@ def keep_alive():
 
 def restart():
 	print('restarting')
-	sleep(7)
+	sleep(20)
 	system('python main.py')
