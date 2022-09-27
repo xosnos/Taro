@@ -4,8 +4,8 @@ import logging
 from coffee import coffee_bot
 from inspire import get_quote
 from encourage import update_encouragement, delete_encouragement, positivity, sad_words
+from keep_alive import keep_alive
 from replit import db
-from keep_alive import keep_alive, restart
 
 client = discord.Client(intents = discord.Intents.default())
 
@@ -58,8 +58,4 @@ try:
 	keep_alive()
 	client.run(os.environ['TOKEN'], log_handler=handler, log_level=logging.INFO)
 except discord.HTTPException as e:
-	if e.status == 429:
-		restart()
-		os.system('kill 1')
-	else:
-		raise e
+	logging.error(e)
