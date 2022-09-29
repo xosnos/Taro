@@ -58,4 +58,6 @@ try:
 	keep_alive()
 	client.run(os.environ['TOKEN'], log_handler=handler, log_level=logging.INFO)
 except discord.HTTPException as e:
-	logging.error(e)
+	if e.status == 429:
+		os.system("python restarter.py")
+		os.system('kill 1')
